@@ -22,6 +22,29 @@ Use `orca` when Orca's running editor/runtime is the source of truth. Use plain 
 
 Prefer `--json` for agent-driven calls. If the CLI is missing, say so explicitly instead of inspecting source files first.
 
+## Connect sessions with patch cables (Joel’s fork)
+
+When asked to connect two existing sessions or workspaces, first check `ORCA patch --help`.
+These commands are a personal-fork feature; if unavailable, report that and do not substitute
+terminal input or invent a cable. Use the desktop instance displaying the main Projects sidebar.
+
+```text
+ORCA patch list --json
+ORCA patch connect --from <endpoint-id-or-terminal-handle> --to <endpoint-id-or-terminal-handle> --color purple --json
+ORCA patch disconnect --from <endpoint-id-or-terminal-handle> --to <endpoint-id-or-terminal-handle> --json
+```
+
+Copy exact endpoint IDs or handles from `patch list`; expand workspace rows when agent endpoints
+are missing. A workspace with multiple agents needs a specific agent endpoint. Connecting uses
+the same drawing and peer-inbox introduction flow as dragging a cable. Report the receipt:
+`queued` means both introductions were queued, not read; `visual-only` means there is no verified
+peer-mail connection. Cross-host and direct-SSH mail remain visual-only. Do not resend after a
+timeout without inspecting `patch list`, because a cable or introduction may already exist.
+
+Connections last for the renderer session. Disconnect before reloading when peer cooperation
+should end; a reload removes drawings but cannot recall delivered introductions. Connecting
+peers does not create supervised Tasks or transfer ownership of their work.
+
 ## Full Handoffs
 
 A full handoff transfers ownership to another agent or worktree, then the original agent stops. Treat requests phrased as "hand off", "handoff", "handover", "give this to another agent", "give this to another worktree", "another agent", or "another worktree" as full handoffs unless the user explicitly asks to supervise, monitor, wait for results, track completion, coordinate a DAG, use decision gates, or manage ask/reply.

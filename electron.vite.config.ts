@@ -219,6 +219,7 @@ export const electronViteConfig: UserConfig = {
           index: resolve('src/main/index.ts'),
           // Why: sandboxed webview preloads cannot load Rollup helper chunks.
           'browser-window-close-preload': resolve('src/preload/browser-window-close.ts'),
+          'patch-cable-overlay-preload': resolve('src/preload/patch-cable-overlay.ts'),
           'doc-preview-link-preload': resolve('src/preload/doc-preview-link.ts'),
           'daemon-entry': resolve('src/main/daemon/daemon-entry.ts'),
           'plugin-host-entry': resolve('src/main/plugins/plugin-host-entry.ts'),
@@ -278,6 +279,7 @@ export const electronViteConfig: UserConfig = {
     // Why: compile-time substitution for the telemetry gate. See the block
     // above for the full rationale.
     define: {
+      'process.env.ORCA_PERSONAL_FORK': JSON.stringify(process.env.ORCA_PERSONAL_FORK ?? '0'),
       ORCA_BUILD_IDENTITY: ORCA_BUILD_IDENTITY_LITERAL,
       ORCA_POSTHOG_WRITE_KEY: ORCA_POSTHOG_WRITE_KEY_LITERAL,
       ORCA_DIAGNOSTICS_TOKEN_URL: ORCA_DIAGNOSTICS_TOKEN_URL_LITERAL
@@ -329,6 +331,7 @@ export const electronViteConfig: UserConfig = {
         input: {
           index: resolve('src/renderer/index.html'),
           popout: resolve('src/renderer/popout.html'),
+          'patch-cable-overlay': resolve('src/renderer/patch-cable-overlay.html'),
           web: resolve('src/renderer/web-index.html')
         }
       }

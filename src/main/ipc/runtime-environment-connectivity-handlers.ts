@@ -1,4 +1,5 @@
 import { ipcMain } from 'electron'
+import { desktopPeerMailEnvelope } from './desktop-peer-mail-envelope'
 import {
   addEnvironmentFromPairingCode,
   listEnvironments,
@@ -243,7 +244,7 @@ function registerPassiveCallHandler(getUserDataPath: () => string): void {
           args.params,
           args.timeoutMs,
           args.expectedEnvironmentPairingRevision,
-          undefined,
+          desktopPeerMailEnvelope(args.method, args.params),
           { expectedEnvironmentRuntimeId: args.expectedEnvironmentRuntimeId }
         )
       } catch (error) {

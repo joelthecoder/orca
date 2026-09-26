@@ -8,7 +8,7 @@ const {
   rmSync
 } = require('node:fs')
 const { dirname, join, resolve } = require('node:path')
-const { builtinModules, createRequire } = require('node:module')
+const { isBuiltin, createRequire } = require('node:module')
 const { PE_MACHINE, readPeMachine } = require('./scripts/windows-pe-machine.cjs')
 
 const projectDir = resolve(__dirname, '..')
@@ -67,11 +67,6 @@ const TYPE_DECLARATION_ARTIFACT_RE = /\.d\.(?:c|m)?ts(?:\.map)?$/
 const JS_SOURCE_MAP_ARTIFACT_RE = /\.(?:c|m)?js\.map$/
 const VERSIONED_ONNXRUNTIME_DYLIB_RE = /^libonnxruntime\.\d[\d.]*\.dylib$/
 
-const NODE_BUILTINS = new Set([
-  ...builtinModules,
-  ...builtinModules.map((moduleName) => `node:${moduleName}`)
-])
-
 function packageNameFromSpecifier(specifier) {
   if (specifier.startsWith('@')) {
     const [scope, name] = specifier.split('/')
@@ -85,7 +80,7 @@ function isPackagedExternalSpecifier(specifier) {
     !specifier.startsWith('.') &&
     !specifier.startsWith('/') &&
     specifier !== 'electron' &&
-    !NODE_BUILTINS.has(specifier)
+    !isBuiltin(specifier)
   )
 }
 

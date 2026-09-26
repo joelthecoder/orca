@@ -29,7 +29,18 @@ createHelperApp()
 
 function buildUniversalBinary() {
   const builtBinaries = universalTriples.map((triple) => {
-    run('swift', ['build', '-c', 'release', '--package-path', packagePath, '--triple', triple])
+    // Swift 6.4 defaults to Swift Build, whose output layout ignores the triple directory.
+    run('swift', [
+      'build',
+      '--build-system',
+      'native',
+      '-c',
+      'release',
+      '--package-path',
+      packagePath,
+      '--triple',
+      triple
+    ])
     return path.join(packagePath, '.build', triple, 'release', 'orca-computer-use-macos')
   })
   mkdirSync(path.dirname(binaryPath), { recursive: true })

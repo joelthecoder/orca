@@ -1,5 +1,6 @@
 import React from 'react'
-import { Kanban } from 'lucide-react'
+import { Cable, Kanban } from 'lucide-react'
+import { ShortcutKeyCombo } from '@/components/ShortcutKeyCombo'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
@@ -13,12 +14,16 @@ const WORKSPACE_BOARD_MOVED_HINT_STORAGE_KEY = 'orca.workspaceBoardMovedHintSeen
 const WORKSPACE_BOARD_MOVED_HINT_DURATION_MS = 12000
 
 type SidebarToolbarProps = {
+  patchMode?: boolean
+  onPatchModeToggle?: () => void
   workspaceBoardOpen: boolean
   workspaceBoardDragPreviewOpen?: boolean
   onWorkspaceBoardToggle: () => void
 }
 
 const SidebarToolbar = React.memo(function SidebarToolbar({
+  patchMode = false,
+  onPatchModeToggle,
   workspaceBoardOpen,
   workspaceBoardDragPreviewOpen = false,
   onWorkspaceBoardToggle
@@ -76,6 +81,28 @@ const SidebarToolbar = React.memo(function SidebarToolbar({
           <SidebarSettingsHelpMenu />
         </div>
         <div className="flex items-center gap-1">
+          {onPatchModeToggle && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={patchMode ? 'secondary' : 'ghost'}
+                  size="icon-xs"
+                  aria-label="Patch cables (prototype)"
+                  aria-pressed={patchMode}
+                  onClick={onPatchModeToggle}
+                >
+                  <Cable className="size-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                Patch cables{' '}
+                <ShortcutKeyCombo
+                  keys={navigator.userAgent.includes('Mac') ? ['⌘', '⌥'] : ['Ctrl', 'Alt']}
+                />{' '}
+                drag · Connect live agents through their inboxes
+              </TooltipContent>
+            </Tooltip>
+          )}
           <ScrollToCurrentWorkspaceToolbarButton />
           <Tooltip open={workspaceBoardMovedHintOpen ? true : undefined}>
             <TooltipTrigger asChild>

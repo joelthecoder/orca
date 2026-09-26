@@ -1,4 +1,5 @@
 import { app, powerMonitor } from 'electron'
+import { IS_PERSONAL_FORK } from '../personal-fork-build'
 import type { BrowserWindow } from 'electron'
 import { is } from '@electron-toolkit/utils'
 import type { ReleaseBuild, ReleaseChannel } from '../../shared/release-channel'
@@ -136,7 +137,7 @@ export class UpdaterSetup extends UpdaterDownloadInstall {
     if (!app.isPackaged && !is.dev) {
       return
     }
-    if (is.dev) {
+    if (is.dev || IS_PERSONAL_FORK) {
       return
     }
 

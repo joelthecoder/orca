@@ -45,6 +45,10 @@ Tokens come in pairs: a **surface** and a **foreground** that meets contrast on 
 
 The `sidebar` family expands into `--sidebar`, `--sidebar-foreground`, `--sidebar-primary`, `--sidebar-primary-foreground`, `--sidebar-accent`, `--sidebar-accent-foreground`, `--sidebar-border`, and `--sidebar-ring` — use them inside the worktree sidebar so its hover/selected/focus states stay consistent and don't bleed into other panels. `editor-surface` is its own token (not just `background`) because Monaco and the markdown editor have a slightly darker surface in dark mode to match VS Code conventions; reach for it whenever you're rendering an editor pane.
 
+### Personal-fork cable materials
+
+The patch-cable experiment uses `--patch-*` material tokens in `main.css` for 24 cable jacket colors, metal highlights, and rubber shadows. These are physical-material colors chosen by the user, not status or general UI colors. Its surrounding controls use the existing button, popover, tooltip, typography, spacing, and surface tokens. Keep these accents within the cable artwork and palette. See [Joel’s fork guide](../README.joel.md).
+
 ### Git decoration colors
 
 For diff status, file-tree decorations, and the changes view, use the git decoration tokens (mirroring VS Code's palette so users transferring from VS Code aren't surprised):

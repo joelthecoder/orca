@@ -111,6 +111,14 @@ docs/**
 !docs/bug-reproductions/
 !docs/bug-reproductions/**
 !docs/STYLEGUIDE.md
+!docs/fork/
+!docs/fork/upstream-sync.md
+!docs/fork/assets/
+!docs/fork/assets/patch-cables-dark.png
+!docs/fork/assets/patch-cable-palette.png
+!docs/fork/assets/patch-cables-outside-study.png
+!docs/fork/assets/patch-cable-material.png
+!docs/fork/assets/patch-main-view.png
 !docs/audits/
 !docs/audits/crashpad-read-limit/
 !docs/audits/crashpad-read-limit/source-hashes.json

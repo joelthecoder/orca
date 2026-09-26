@@ -1,0 +1,27 @@
+export const PATCH_COLORS = [
+  'orange',
+  'amber',
+  'yellow',
+  'lemon',
+  'lime',
+  'green',
+  'mint',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'cobalt',
+  'indigo',
+  'purple',
+  'violet',
+  'magenta',
+  'pink',
+  'rose',
+  'red',
+  'coral',
+  'white',
+  'silver',
+  'graphite',
+  'black'
+] as const
+export type PatchColor = (typeof PATCH_COLORS)[number]

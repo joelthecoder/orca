@@ -194,6 +194,9 @@ const DashboardAgentRow = React.memo(function DashboardAgentRow({
         sendTargetStatus === 'disabled' && 'cursor-default opacity-60'
       )}
       data-focused-agent-pane={isFocusedPane ? 'true' : undefined}
+      data-patch-session-id={agent.rowSource === 'subagent' ? undefined : agent.paneKey}
+      data-patch-terminal-handle={agent.entry.terminalHandle}
+      data-patch-name={agent.tab.title || 'Agent session'}
       data-agent-send-target={sendTargetStatus}
       title={titleParts.length > 0 ? titleParts.join(' • ') : undefined}
       role={participatesInLineage ? 'treeitem' : undefined}

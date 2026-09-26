@@ -1,0 +1,96 @@
+.sidebar-patch-layer,
+.sidebar-patch-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sidebar-patch-layer {
+  z-index: 9;
+}
+.sidebar-patch-controls {
+  position: absolute;
+  right: calc(var(--spacing) * 2);
+  height: calc(var(--spacing) * 7);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+  pointer-events: auto;
+  background: var(--worktree-sidebar);
+  border-radius: var(--radius);
+}
+.sidebar-patch-layer .patch-jack {
+  width: 16px;
+  height: 16px;
+  pointer-events: auto;
+}
+.sidebar-patch-layer .patch-jack[data-patched='true'] .patch-jack-ring,
+.sidebar-patch-layer[data-desktop-patch='true'] .patch-add-jack > span {
+  visibility: hidden;
+}
+.sidebar-patch-layer .patch-jack-ring,
+.sidebar-patch-layer .patch-jack[data-patched='true'] .patch-jack-ring {
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(
+    135deg,
+    var(--patch-metal-light),
+    var(--patch-metal-dark) 55%,
+    var(--patch-metal-mid)
+  );
+  opacity: 1;
+}
+.sidebar-patch-layer .patch-jack-ring > span,
+.sidebar-patch-layer .patch-jack[data-patched='true'] .patch-jack-ring > span {
+  width: 4px;
+  height: 4px;
+  border-width: 1px;
+}
+.sidebar-patch-layer .patch-cable-edge {
+  stroke-width: 4px;
+}
+.sidebar-patch-layer .patch-cable-body {
+  stroke-width: 3px;
+}
+.sidebar-patch-layer .patch-cable-light {
+  stroke-width: 1px;
+  transform: translateY(-0.6px);
+}
+.sidebar-patch-layer .patch-cable-shadow {
+  stroke-width: 4px;
+  opacity: 0.12;
+  transform: translateY(1px);
+  filter: blur(1px);
+}
+.patch-add-jack {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+.patch-add-jack > span {
+  width: 6px;
+  height: 6px;
+  border: 1px dashed var(--patch-metal-light);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--patch-shadow) 35%, transparent);
+  opacity: 0.55;
+}
+button.patch-add-jack {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+button.patch-add-jack:focus-visible {
+  outline: 2px solid var(--ring);
+  border-radius: 50%;
+}
+.sidebar-patch-layer .patch-jack::after {
+  display: none;
+}
+button.patch-add-jack:hover > span,
+button.patch-add-jack:focus-visible > span {
+  opacity: 1;
+}

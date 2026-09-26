@@ -14,6 +14,7 @@ import { DESKTOP_RENDERER_RUNTIME_CLIENT_CAPABILITIES } from './desktop-renderer
 import { RpcDispatcher } from '../runtime/rpc/dispatcher'
 import { ALL_RPC_METHODS } from '../runtime/rpc/methods'
 import { DesktopRuntimeSenderLifecycle } from './desktop-runtime-sender-lifecycle'
+import { desktopPeerMailEnvelope } from './desktop-peer-mail-envelope'
 
 function boundTerminalFitRestore(pending: Promise<boolean>): Promise<boolean> {
   let timer: ReturnType<typeof setTimeout> | undefined
@@ -74,7 +75,8 @@ export function registerRuntimeHandlers(runtime: OrcaRuntimeService): void {
           id: 'desktop-ipc',
           authToken: 'desktop-ipc',
           method: args.method,
-          params: args.params
+          params: args.params,
+          ...desktopPeerMailEnvelope(args.method, args.params)
         },
         {
           clientId: 'desktop-renderer',

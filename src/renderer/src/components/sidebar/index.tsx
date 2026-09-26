@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
+import { SidebarPatchLayer } from '../patch-bay/SidebarPatchLayer'
+import { useSidebarPatchGesture } from '../patch-bay/use-sidebar-patch-gesture'
 import { useAppStore } from '@/store'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { useSidebarResize } from '@/hooks/useSidebarResize'
@@ -147,12 +149,14 @@ function Sidebar({
     onDraftWidthChange: setLiveSidebarWidth
   })
 
+  const patch = useSidebarPatchGesture(containerRef, sidebarOpen && sidebarBody !== 'agents')
   useWorkspaceRevealBodyRedirect(sidebarOpen && sidebarBody === 'agents')
 
   return (
     <TooltipProvider delayDuration={400}>
       <div
         ref={containerRef}
+        data-patch-sidebar={patch.enabled && sidebarBody !== 'agents' ? 'true' : undefined}
         data-native-file-drop-target={sidebarOpen ? nativeDropTarget : undefined}
         className="relative min-h-0 flex-shrink-0 bg-worktree-sidebar flex flex-col overflow-hidden scrollbar-sleek-parent"
         style={leftSidebarStyle}
@@ -201,6 +205,8 @@ function Sidebar({
 
               {/* Fixed bottom toolbar */}
               <SidebarToolbar
+                patchMode={patch.enabled}
+                onPatchModeToggle={() => patch.setEnabled((current) => !current)}
                 workspaceBoardOpen={workspaceBoardOpen}
                 workspaceBoardDragPreviewOpen={workspaceBoardDragPreviewOpen}
                 onWorkspaceBoardToggle={toggleWorkspaceBoard}
@@ -208,6 +214,12 @@ function Sidebar({
             </div>
           </>
         )}
+
+        <SidebarPatchLayer
+          rootRef={containerRef}
+          patch={patch}
+          visible={sidebarOpen && patch.enabled && sidebarBody !== 'agents'}
+        />
 
         {sidebarOpen && affordance.visible ? (
           <div

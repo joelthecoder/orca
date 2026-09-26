@@ -12,6 +12,11 @@ description: >-
 
 # Orca orchestration
 
+For a user-requested visual connection between existing sessions in Joel’s fork, use the
+`orca-cli` guide’s patch-cable commands. They attach the cable and queue peer introductions
+through the existing inbox. A patch connection alone does not create a supervised Task or
+Dispatch; continue to use the authority and lifecycle rules below for supervised work.
+
 Orchestration is Orca's structured coordination layer. It records who owns work,
 which attempt is authoritative, and when supervised work has settled.
 

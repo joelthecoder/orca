@@ -1,4 +1,5 @@
 import { app } from 'electron'
+import { IS_PERSONAL_FORK } from '../personal-fork-build'
 import { existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join, resolve } from 'node:path'
@@ -208,6 +209,10 @@ export function configureDevUserDataPath(isDev: boolean): void {
     return
   }
 
+  if (IS_PERSONAL_FORK && !isDev) {
+    app.setPath('userData', join(app.getPath('appData'), 'orca-local'))
+    return
+  }
   if (!isDev) {
     return
   }

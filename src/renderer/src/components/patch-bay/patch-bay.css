@@ -1,0 +1,292 @@
+.patch-bay {
+  container-type: inline-size;
+  color: var(--foreground);
+  background: var(--background);
+}
+.patch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 4);
+  padding: calc(var(--spacing) * 6);
+  border-bottom: 1px solid var(--border);
+}
+.patch-prototype-label {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.patch-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 4);
+  padding: calc(var(--spacing) * 4) calc(var(--spacing) * 6);
+}
+.patch-swatch {
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.patch-swatch span {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow:
+    inset 0 -3px 3px color-mix(in srgb, var(--patch-shadow) 28%, transparent),
+    inset 0 2px 2px color-mix(in srgb, var(--patch-metal-light) 40%, transparent);
+}
+.patch-swatch[aria-pressed='true'] {
+  border-color: currentColor;
+}
+.patch-swatch:focus-visible,
+.patch-jack:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.patch-rack {
+  position: relative;
+  margin: 0 calc(var(--spacing) * 6);
+  padding: calc(var(--spacing) * 6) calc(var(--spacing) * 6) calc(var(--spacing) * 28);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background:
+    linear-gradient(125deg, color-mix(in srgb, var(--foreground) 3%, transparent), transparent 55%),
+    var(--card);
+}
+.patch-rack-label {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 4);
+  color: var(--muted-foreground);
+  font:
+    10px ui-monospace,
+    monospace;
+  letter-spacing: 0.12em;
+  margin-bottom: calc(var(--spacing) * 8);
+}
+.patch-endpoints {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: clamp(80px, 22cqw, 220px);
+  row-gap: calc(var(--spacing) * 9);
+}
+.patch-endpoint {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 90px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  border-radius: 6px;
+}
+.patch-endpoint-copy {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+}
+.patch-endpoint[data-side='left'] {
+  padding-right: 30px;
+}
+.patch-endpoint[data-side='right'] {
+  padding-left: 30px;
+}
+.patch-jack {
+  position: absolute;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: crosshair;
+  touch-action: none;
+}
+.patch-endpoint[data-side='left'] .patch-jack {
+  right: -16px;
+}
+.patch-endpoint[data-side='right'] .patch-jack {
+  left: -16px;
+}
+.patch-jack-ring {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--patch-metal-light),
+    var(--patch-metal-dark) 55%,
+    var(--patch-metal-mid)
+  );
+  box-shadow: 0 2px 3px color-mix(in srgb, var(--patch-shadow) 30%, transparent);
+}
+.patch-jack-ring > span {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--patch-shadow);
+  border: 3px solid var(--patch-metal-dark);
+}
+.patch-jack:hover .patch-jack-ring,
+.patch-jack[aria-pressed='true'] .patch-jack-ring {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.patch-port-number {
+  position: absolute;
+  bottom: -19px;
+  font:
+    10px ui-monospace,
+    monospace;
+  color: var(--muted-foreground);
+}
+.patch-endpoint[data-side='left'] .patch-port-number {
+  right: -6px;
+}
+.patch-endpoint[data-side='right'] .patch-port-number {
+  left: -6px;
+}
+.patch-cables {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 3;
+}
+.patch-cable path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.patch-cable-shadow {
+  stroke: var(--patch-shadow);
+  stroke-width: 15;
+  opacity: 0.2;
+  filter: blur(3px);
+}
+.patch-cable-edge {
+  stroke: color-mix(in srgb, currentColor 68%, var(--patch-shadow));
+  stroke-width: 13;
+}
+.patch-cable-body {
+  stroke: currentColor;
+  stroke-width: 10.5;
+}
+.patch-cable-light {
+  stroke: color-mix(in srgb, currentColor 72%, var(--patch-metal-light));
+  stroke-width: 3;
+  opacity: 0.4;
+}
+.patch-cable .patch-cable-glint {
+  stroke: var(--patch-metal-light);
+  stroke-width: 2;
+  opacity: 0.3;
+}
+.patch-cable .patch-plug-seam {
+  stroke: var(--patch-metal-dark);
+  stroke-width: 1.5;
+}
+.patch-cable .patch-plug-collar {
+  fill: currentColor;
+  stroke: color-mix(in srgb, currentColor 70%, var(--patch-shadow));
+  stroke-width: 0.5;
+}
+.patch-jack[data-patched='true'] .patch-jack-ring {
+  visibility: hidden;
+  background: var(--patch-metal-dark);
+  width: 16px;
+  height: 16px;
+}
+.patch-jack[data-patched='true'] .patch-jack-ring > span {
+  width: 10px;
+  height: 10px;
+  border-width: 1px;
+}
+.patch-jack[data-patched='true']::after {
+  content: '';
+  position: absolute;
+  right: -7px;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  border: 1px dashed var(--muted-foreground);
+  border-radius: 50%;
+  opacity: 0.35;
+}
+.patch-rack-caption {
+  position: absolute;
+  bottom: calc(var(--spacing) * 5);
+  left: calc(var(--spacing) * 6);
+  right: calc(var(--spacing) * 6);
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+.patch-footer {
+  display: grid;
+  gap: 12px;
+  padding: calc(var(--spacing) * 5) calc(var(--spacing) * 6);
+}
+.patch-connection-list {
+  display: grid;
+  gap: 2px;
+}
+.patch-connection {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.patch-connection > span:nth-child(2) {
+  color: var(--foreground);
+}
+.patch-connection-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+}
+@container (max-width: 550px) {
+  .patch-header {
+    padding: calc(var(--spacing) * 4);
+  }
+  .patch-controls {
+    align-items: flex-start;
+    padding: calc(var(--spacing) * 4);
+  }
+  .patch-rack {
+    margin: 0 calc(var(--spacing) * 3);
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .patch-endpoints {
+    column-gap: 70px;
+    row-gap: calc(var(--spacing) * 10);
+  }
+  .patch-endpoint {
+    padding-inline: 8px;
+  }
+  .patch-endpoint[data-side='left'] {
+    padding-right: 16px;
+  }
+  .patch-endpoint[data-side='right'] {
+    padding-left: 16px;
+  }
+  .patch-rack-label {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+}

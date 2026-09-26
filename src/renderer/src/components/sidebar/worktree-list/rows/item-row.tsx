@@ -154,6 +154,7 @@ export function renderWorktreeItemRow(
       aria-selected={ctx.selectedWorktreeIds.has(worktreeIdentity)}
       aria-current={isActiveWorktree ? 'page' : undefined}
       data-worktree-id={itemRow.worktree.id}
+      data-patch-name={itemRow.worktree.displayName}
       data-worktree-host-identity={worktreeIdentity}
       data-worktree-row-key={itemRow.rowKey}
       data-worktree-section-key={itemRow.sectionKey}

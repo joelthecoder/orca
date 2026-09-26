@@ -1,4 +1,5 @@
 import { app } from 'electron'
+import { IS_PERSONAL_FORK } from '../personal-fork-build'
 import { is } from '@electron-toolkit/utils'
 import { withUpdaterSpan } from '../observability/instrumentation'
 import {
@@ -57,7 +58,7 @@ export abstract class UpdaterScheduling extends UpdaterCheckFailure {
     if (this.backgroundCheckLaunchPending || this.currentStatus.state === 'checking') {
       return false
     }
-    if (!app.isPackaged || is.dev) {
+    if (!app.isPackaged || is.dev || IS_PERSONAL_FORK) {
       this.sendStatus({ state: 'not-available' })
       return false
     }

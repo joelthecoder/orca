@@ -1,9 +1,12 @@
 import { createHash } from 'node:crypto'
 import path from 'node:path'
 import type { AppIdentity } from '../../shared/app-identity'
+import { IS_PERSONAL_FORK } from '../personal-fork-build'
 
-const BASE_APP_NAME = 'Orca'
-const BASE_APP_USER_MODEL_ID = 'com.stablyai.orca'
+const BASE_APP_NAME = IS_PERSONAL_FORK ? 'Orca Local' : 'Orca'
+const BASE_APP_USER_MODEL_ID = IS_PERSONAL_FORK
+  ? 'com.joelthecoder.orca.local'
+  : 'com.stablyai.orca'
 const MAX_LABEL_LENGTH = 80
 
 export type DevInstanceIdentity = AppIdentity & {

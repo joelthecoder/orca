@@ -299,6 +299,9 @@ export const CompactAgentRow = React.memo(function CompactAgentRow({
       onDragStart={(e) => e.stopPropagation()}
       data-focused-agent-pane={isFocusedPane ? 'true' : undefined}
       data-agent-send-target={sendTargetStatus}
+      data-patch-session-id={agent.rowSource === 'subagent' ? undefined : agent.paneKey}
+      data-patch-terminal-handle={agent.entry.terminalHandle}
+      data-patch-name={primary}
       role={agent.lineage ? 'treeitem' : undefined}
       aria-level={agent.lineage ? agent.lineage.depth + 1 : undefined}
       aria-expanded={hasChildDisclosure ? childAgentsExpanded : undefined}

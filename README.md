@@ -2,6 +2,15 @@
   <a href="https://onOrca.dev"><img src="resources/build/icon.png" alt="Orca" width="64" valign="middle" /></a> Orca
 </h1>
 
+**Joel’s personal fork:** [custom features, screenshots, build instructions, and upstream updates](README.joel.md).
+
+<p>
+  <a href="README.joel.md#patch-cables"><img src="docs/fork/assets/patch-cable-material.png" alt="Patch cable renderer showing covered sockets, knurled plugs, and spare ports on synthetic fixtures" width="360" /></a>
+  <a href="README.joel.md#patch-cables"><img src="docs/fork/assets/patch-cable-palette.png" alt="Patch cable lab showing the 24 cable colors" width="480" /></a>
+</p>
+
+Patch cable renderer and palette lab, using synthetic fixtures. [Feature details and limitations](README.joel.md#patch-cables).
+
 <p align="center">
   <a href="https://github.com/stablyai/orca"><img src="https://img.shields.io/github/stars/stablyai/orca?style=flat&amp;label=%E2%98%85&amp;color=08C" alt="GitHub stars" /></a>
   <a href="https://github.com/stablyai/orca/releases"><img src="docs/assets/readme-downloads.svg" alt="Total downloads across all releases" /></a>

@@ -93,6 +93,7 @@ export function renderFolderWorkspaceVirtualRow(args: {
       aria-selected={ctx.selectedWorktreeIds.has(folderWorktreeIdentity)}
       aria-current={ctx.activeWorktreeId === folderWorktree.id ? 'page' : undefined}
       data-worktree-id={folderWorktree.id}
+      data-patch-name={folderWorktree.displayName}
       data-worktree-host-identity={folderWorktreeIdentity}
       data-worktree-row-key={folderWorktree.id}
       data-worktree-virtual-row

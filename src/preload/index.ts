@@ -1,4 +1,6 @@
+import type { PatchCommandRequest, PatchCommandReply } from '../shared/patch-cable-command'
 import { contextBridge, ipcRenderer } from 'electron'
+import type { PatchCableFrame } from '../shared/patch-cable-frame'
 import type { PreloadApi } from './api-types'
 import {
   installBrowserFindListener,
@@ -188,6 +190,16 @@ const api = {
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('patchCableDesktop', {
+      publish: (frame: PatchCableFrame | null) => ipcRenderer.send('patch-cable:publish', frame),
+      onCommand: (listener: (request: PatchCommandRequest) => void) => {
+        const handler = (_event: Electron.IpcRendererEvent, request: PatchCommandRequest): void =>
+          listener(request)
+        ipcRenderer.on('patch-cable:command', handler)
+        return () => ipcRenderer.removeListener('patch-cable:command', handler)
+      },
+      reply: (reply: PatchCommandReply) => ipcRenderer.send('patch-cable:reply', reply)
+    })
   } catch (error) {
     console.error(error)
   }
