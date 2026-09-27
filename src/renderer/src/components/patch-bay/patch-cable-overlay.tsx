@@ -35,7 +35,7 @@ function PatchCableOverlay(): React.JSX.Element | null {
     >
       <svg
         className="patch-desktop-cables"
-        viewBox={`0 0 ${PATCH_CABLE_WINDOW_WIDTH} ${frame.height}`}
+        viewBox={`0 0 ${frame.width ?? PATCH_CABLE_WINDOW_WIDTH} ${frame.height}`}
         aria-hidden="true"
       >
         {frame.cables.map((c, index) => (

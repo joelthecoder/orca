@@ -137,6 +137,7 @@ export function WorktreeCardParentContent({
             affiliateListMode && 'px-1'
           )}
           data-worktree-card-status-slot=""
+          data-patch-socket-anchor=""
         >
           <WorktreeCardStatusSlot
             worktreeId={worktree.id}

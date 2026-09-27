@@ -154,6 +154,7 @@ export class PatchCableScene {
       false
     )
     this.camera.bottom = -frame.height
+    this.camera.right = frame.width ?? PATCH_CABLE_WINDOW_WIDTH
     this.camera.updateProjectionMatrix()
     frame.cables.forEach((cable) => {
       const a = cableAxis(cable.from, cable.to),

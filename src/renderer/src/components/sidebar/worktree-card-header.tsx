@@ -90,7 +90,7 @@ export function WorktreeCardHeader({
   } = presentation
 
   return (
-    <div className="flex min-w-0 items-center justify-between gap-2">
+    <div data-patch-title-line="" className="flex min-w-0 items-center justify-between gap-2">
       <div className="flex min-w-0 flex-1 items-center gap-1.5">
         {showPinnedRepoIcon && (
           <RepoIdentityChip repo={repo!}>

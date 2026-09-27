@@ -7,6 +7,9 @@
 .sidebar-patch-layer {
   z-index: 9;
 }
+[data-patch-sidebar='true'] [data-patch-socket-anchor] {
+  opacity: 0;
+}
 .sidebar-patch-controls {
   position: absolute;
   right: calc(var(--spacing) * 2);

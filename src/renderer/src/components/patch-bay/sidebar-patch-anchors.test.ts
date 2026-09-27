@@ -10,23 +10,33 @@ afterEach(() => {
 })
 
 describe('sidebar patch identity and geometry', () => {
-  it('places agent sockets beside their own row through indentation and zoom changes', () => {
+  it('keeps sockets on their measured status markers through expansion, indentation, and zoom', () => {
     const root = document.createElement('div')
     document.body.append(root)
     Object.defineProperties(root, { clientWidth: { value: 340 }, clientHeight: { value: 800 } })
     vi.spyOn(root, 'getBoundingClientRect').mockReturnValue(new DOMRect(100, 50, 680, 1600))
     root.innerHTML =
-      '<div data-worktree-host-identity="local|repo"><div data-patch-session-id="pane"></div></div>'
+      '<div data-worktree-host-identity="local|repo"><span data-patch-socket-anchor></span><div data-patch-session-id="pane"><span data-patch-socket-anchor></span></div></div>'
     const workspace = root.children[0]
-    const agent = workspace.children[0]
+    const agent = workspace.children[1]
     vi.spyOn(workspace, 'getBoundingClientRect').mockReturnValue(new DOMRect(120, 150, 640, 200))
+    vi.spyOn(workspace.children[0], 'getBoundingClientRect').mockReturnValue(
+      new DOMRect(140, 170, 20, 20)
+    )
     const row = vi
       .spyOn(agent, 'getBoundingClientRect')
       .mockReturnValue(new DOMRect(188, 250, 540, 48))
+    const marker = vi
+      .spyOn(agent.children[0], 'getBoundingClientRect')
+      .mockReturnValue(new DOMRect(200, 264, 20, 20))
     const anchor = () => readSidebarPatchAnchors(root).anchors.find((a) => a.id.includes('session'))
-    expect(anchor()).toMatchObject({ x: 36, y: 112 })
-    row.mockReturnValue(new DOMRect(212, 350, 516, 48))
-    expect(anchor()).toMatchObject({ x: 48, y: 162 })
+    expect(readSidebarPatchAnchors(root).anchors[0]).toMatchObject({ x: 25, y: 65 })
+    expect(anchor()).toMatchObject({ x: 55, y: 112 })
+    row.mockReturnValue(new DOMRect(188, 250, 540, 240))
+    expect(anchor()).toMatchObject({ x: 55, y: 112 })
+    row.mockReturnValue(new DOMRect(212, 350, 516, 240))
+    marker.mockReturnValue(new DOMRect(224, 364, 20, 20))
+    expect(anchor()).toMatchObject({ x: 67, y: 162 })
   })
 
   it('retains connections across repo boundaries, reordering, and temporary unmounts', () => {
@@ -52,8 +62,8 @@ describe('sidebar patch identity and geometry', () => {
     firstY = 350
     secondY = 90
     const after = readSidebarPatchAnchors(root).anchors
-    expect(after.find((a) => a.id === connections[0].from)?.y).toBe(373)
-    expect(after.find((a) => a.id === connections[0].to)?.y).toBe(113)
+    expect(after.find((a) => a.id === connections[0].from)?.y).toBe(385)
+    expect(after.find((a) => a.id === connections[0].to)?.y).toBe(125)
     first.remove()
     expect(readSidebarPatchAnchors(root).anchors).toHaveLength(1)
     root.append(first)

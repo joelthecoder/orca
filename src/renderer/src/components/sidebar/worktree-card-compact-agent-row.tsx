@@ -214,12 +214,14 @@ export const CompactAgentRow = React.memo(function CompactAgentRow({
         </button>
       ) : null}
       {/* Why: the row's actionable disabled reason must win on every hit area. */}
-      <AgentStateDot
-        state={dotState}
-        size="sm"
-        title={sendTargetDisabledReason ? null : undefined}
-        tooltipSide="right"
-      />
+      <span data-patch-socket-anchor="" className="inline-flex shrink-0">
+        <AgentStateDot
+          state={dotState}
+          size="sm"
+          title={sendTargetDisabledReason ? null : undefined}
+          tooltipSide="right"
+        />
+      </span>
       {!hideIcon && (
         <span className="inline-flex shrink-0" title={formatAgentTypeLabel(agent.agentType)}>
           <AgentIcon agent={agentTypeToIconAgent(agent.agentType)} size={13} />

@@ -8,17 +8,24 @@ Connect session and workspace cards with chunky, brightly colored cables inspire
 
 The cable button at the bottom of the **main Projects sidebar** reveals jacks and a color picker. You can also click two jacks to connect them, including with the keyboard. Choose from **24 cable jackets**, including purple, red, yellow, hot pink, cyan, black, graphite, silver, and white. Each endpoint accepts up to eight connections and shows a faint spare jack when another connection is available.
 
-![Selected outside-window layout study](docs/fork/assets/patch-cables-outside-study.png)
+![Current renderer: plugs seated on the workspace and agent socket positions](docs/fork/assets/patch-cable-material.png)
 
-![The 24-color cable palette](docs/fork/assets/patch-cable-palette.png)
-
-The first image is the selected layout study, using synthetic names and the existing sidebar components. The palette screenshot is from the standalone lab. The actual feature attaches to the main app's existing workspace and agent rows.
-
-![Live 3D cable material with raised knurled grips](docs/fork/assets/patch-cable-material.png)
+This alignment fixture uses the live renderer and measured DOM socket positions with synthetic names. The actual feature attaches to the main app's existing workspace and agent rows.
 
 The live renderer uses Three.js tube geometry, machined-metal profiles, raised diamond grip facets, and physically lit rubber. The tube shares its connector's exit axis, avoiding a separate-looking joint. Geometry follows the endpoints and UI zoom; it redraws on change rather than continuously animating. An SVG fallback remains available if WebGL cannot initialize.
 
-Each plug covers its recessed socket, leaving a narrow metal rim. A faint dashed spare port directly below a connected plug starts another connection when clicked; it disappears at eight connections. Agent sockets follow the indentation and vertical center of their own row; adjacent agents use outward-angled plugs so short cables form a rounded loop.
+Each plug covers its recessed socket, leaving a narrow metal rim. A faint dashed spare port directly below a connected plug starts another connection when clicked; it disappears at eight connections. In patch mode, sockets occupy the measured status-marker positions beside the names. Expanding an agent's message does not move its socket; nested rows retain their indentation, and the cable window widens to include them. Adjacent agents use outward-angled plugs so short cables form a rounded loop.
+
+<details>
+<summary>Earlier layout study and palette lab</summary>
+
+These earlier explorations show the layout direction and color choices; the screenshot above shows the current socket alignment.
+
+![Earlier outside-window layout study](docs/fork/assets/patch-cables-outside-study.png)
+
+![The 24-color cable palette in the standalone lab](docs/fork/assets/patch-cable-palette.png)
+
+</details>
 
 ### Connect from an agent or terminal
 

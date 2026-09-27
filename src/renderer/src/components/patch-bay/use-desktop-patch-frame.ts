@@ -1,5 +1,9 @@
 import { useEffect, type RefObject } from 'react'
-import { PATCH_CABLE_OVERHANG, type PatchCableFrame } from '../../../../shared/patch-cable-frame'
+import {
+  PATCH_CABLE_OVERHANG,
+  PATCH_CABLE_WINDOW_WIDTH,
+  type PatchCableFrame
+} from '../../../../shared/patch-cable-frame'
 import { MAX_PATCH_CONNECTIONS, PATCH_COLORS, type PatchConnection } from './patch-bay-model'
 import type { readSidebarPatchAnchors } from './sidebar-patch-anchors'
 
@@ -47,6 +51,10 @@ export function useDesktopPatchFrame(
         top: layout.top + rect.top,
         bottom: layout.bottom + rect.top,
         height: window.innerHeight,
+        width: Math.max(
+          PATCH_CABLE_WINDOW_WIDTH,
+          ...layout.anchors.map((anchor) => anchor.x + PATCH_CABLE_OVERHANG + 12)
+        ),
         dark: document.documentElement.classList.contains('dark'),
         sparePorts: layout.anchors
           .filter((anchor) => {

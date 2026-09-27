@@ -15,6 +15,7 @@ export const PatchCableFrameSchema = z.object({
   top: coordinate,
   bottom: coordinate,
   height: z.number().finite().positive().max(20000),
+  width: z.number().finite().positive().max(20000).optional(),
   dark: z.boolean(),
   sparePorts: z
     .array(point.extend({ id: z.string().max(4096) }))

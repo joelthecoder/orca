@@ -24,7 +24,7 @@ export function installPatchCableWindow(parent: BrowserWindow): void {
     overlay.setBounds({
       x: Math.round(content.x + ((frame?.left ?? 0) - PATCH_CABLE_OVERHANG) * zoom),
       y: content.y,
-      width: Math.ceil(PATCH_CABLE_WINDOW_WIDTH * zoom),
+      width: Math.ceil((frame?.width ?? PATCH_CABLE_WINDOW_WIDTH) * zoom),
       height: content.height
     })
     overlay.webContents.setZoomFactor(zoom)

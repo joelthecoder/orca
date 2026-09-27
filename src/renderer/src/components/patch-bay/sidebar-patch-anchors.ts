@@ -41,9 +41,16 @@ export function readSidebarPatchAnchors(root: HTMLElement): {
       }
       const sessionId = row.dataset.patchSessionId
       const rect = row.getBoundingClientRect()
-      const y =
-        (rect.top - bounds.top) * scale +
-        (sessionId ? (rect.height * scale) / 2 : Math.min(23, (rect.height * scale) / 2))
+      const ownedLandmark = (selector: string): HTMLElement | undefined =>
+        [...row.querySelectorAll<HTMLElement>(selector)].find(
+          (element) =>
+            element.closest('[data-patch-session-id], [data-worktree-host-identity]') === row
+        )
+      const socket = ownedLandmark('[data-patch-socket-anchor]')
+      const title = ownedLandmark('[data-patch-title-line]')
+      const landmark = (socket ?? title ?? row).getBoundingClientRect()
+      const x = (landmark.left - bounds.left + (socket ? landmark.width / 2 : -8)) * scale
+      const y = (landmark.top - bounds.top + landmark.height / 2) * scale
       if (y < top + 12 || y > bottom - 12 || rect.height === 0 || anchors.has(id)) {
         return
       }
@@ -52,7 +59,7 @@ export function readSidebarPatchAnchors(root: HTMLElement): {
         name:
           row.dataset.patchName ??
           (sessionId ? 'Agent session' : (row.dataset.worktreeId ?? 'Workspace')),
-        x: sessionId ? Math.max(12, (rect.left - bounds.left) * scale - 8) : 20,
+        x: Math.max(8, x),
         y,
         direction: -1
       })

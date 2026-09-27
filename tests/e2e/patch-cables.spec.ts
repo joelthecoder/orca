@@ -70,6 +70,26 @@ test('patches across repositories and keeps the cable attached after layout and 
   await page.mouse.move(source.x + 45, source.y + 22)
   await page.mouse.down()
   await expect(page.locator('[data-sidebar-patch-layer]')).toBeVisible()
+  const socketAlignment = () =>
+    page.evaluate(() => {
+      const rows = [
+        ...document.querySelectorAll<HTMLElement>(
+          '[data-worktree-sidebar] [data-worktree-host-identity]'
+        )
+      ]
+      return rows.map((row) => {
+        const marker = row.querySelector('[data-patch-socket-anchor]')!.getBoundingClientRect()
+        const id = JSON.stringify(['workspace', row.dataset.worktreeHostIdentity])
+        const port = [...document.querySelectorAll<HTMLElement>('[data-sidebar-patch-port]')]
+          .find((element) => element.dataset.sidebarPatchPort === id)!
+          .getBoundingClientRect()
+        return Math.hypot(
+          marker.left + marker.width / 2 - port.left - port.width / 2,
+          marker.top + marker.height / 2 - port.top - port.height / 2
+        )
+      })
+    })
+  await expect.poll(async () => Math.max(...(await socketAlignment()))).toBeLessThan(1)
   const target = await rows.nth(1).boundingBox()
   if (!target) {
     throw new Error('Target card was not rendered')
@@ -102,14 +122,22 @@ test('patches across repositories and keeps the cable attached after layout and 
   await page.keyboard.press('Escape')
   await expect(page.locator('.sidebar-patch-status')).toContainText('1 cable')
   const before = await cable.locator('.patch-cable-body').getAttribute('d')
-  // A measured row changing height exercises the same anchor update as a virtual row moving.
+  // Expanding content must not move the socket away from the name/status line.
   await rows.nth(0).evaluate((row) => {
     const extra = document.createElement('div')
     extra.style.height = '70px'
     row.appendChild(extra)
   })
+  await expect.poll(async () => Math.max(...(await socketAlignment()))).toBeLessThan(1)
+  await expect(cable.locator('.patch-cable-body')).toHaveAttribute('d', before!)
+  await rows.nth(0).evaluate((row) => {
+    row.style.paddingTop = '30px'
+    row.style.paddingLeft = '96px'
+  })
   await expect.poll(() => cable.locator('.patch-cable-body').getAttribute('d')).not.toBe(before)
   await expect(cable).toHaveCount(1)
+  await expect.poll(async () => Math.max(...(await socketAlignment()))).toBeLessThan(1)
+  await expect.poll(() => overlay.evaluate(() => window.innerWidth)).toBeGreaterThan(176)
   const windows = await electronApp.evaluate(({ BrowserWindow }) => {
     const companion = BrowserWindow.getAllWindows().find(
       (window) => window.getTitle() === 'Orca patch cables'

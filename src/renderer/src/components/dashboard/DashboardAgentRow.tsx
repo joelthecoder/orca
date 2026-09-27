@@ -241,6 +241,7 @@ const DashboardAgentRow = React.memo(function DashboardAgentRow({
             <span
               className="inline-flex shrink-0 items-center justify-center"
               aria-label={dotTooltipLabel}
+              data-patch-socket-anchor=""
             >
               <AgentStateDot state={dotState} size={stateDotSize} title={null} />
             </span>

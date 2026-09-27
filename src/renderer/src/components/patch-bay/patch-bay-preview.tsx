@@ -55,7 +55,7 @@ function PatchBayPreview(): React.JSX.Element {
                     setDragged(null)
                   }}
                 >
-                  <div className="mb-2 flex items-center gap-2">
+                  <div data-patch-title-line="" className="mb-2 flex items-center gap-2">
                     <GripVertical className="size-3 shrink-0 text-muted-foreground" />
                     <span className="truncate text-xs font-medium">{item.name}</span>
                   </div>
