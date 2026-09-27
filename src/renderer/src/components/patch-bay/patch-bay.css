@@ -191,20 +191,6 @@
   stroke-width: 3;
   opacity: 0.4;
 }
-.patch-cable .patch-cable-glint {
-  stroke: var(--patch-metal-light);
-  stroke-width: 2;
-  opacity: 0.3;
-}
-.patch-cable .patch-plug-seam {
-  stroke: var(--patch-metal-dark);
-  stroke-width: 1.5;
-}
-.patch-cable .patch-plug-collar {
-  fill: currentColor;
-  stroke: color-mix(in srgb, currentColor 70%, var(--patch-shadow));
-  stroke-width: 0.5;
-}
 .patch-jack[data-patched='true'] .patch-jack-ring {
   visibility: hidden;
   background: var(--patch-metal-dark);

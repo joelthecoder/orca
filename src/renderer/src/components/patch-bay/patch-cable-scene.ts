@@ -35,6 +35,7 @@ type Endpoint = PatchCableFrame['cables'][number]['from']
 const UP = new Vector3(0, 1, 0)
 const CONNECTOR_LENGTH = 16
 const CABLE_RADIUS = 1.85
+const CONNECTOR_TILT = (12 * Math.PI) / 180
 
 function cableAxis(point: Endpoint, other: Endpoint): Vector3 {
   const spread = Math.abs(other.y - point.y) < 48 ? -1 : 1
@@ -42,7 +43,11 @@ function cableAxis(point: Endpoint, other: Endpoint): Vector3 {
     point.angle ??
     (point.direction < 0 ? 180 : 0) + (other.y >= point.y ? 20 : -20) * point.direction * spread
   const radians = (degrees * Math.PI) / 180
-  return new Vector3(Math.cos(radians), -Math.sin(radians), 0)
+  return new Vector3(
+    Math.cos(radians) * Math.sin(CONNECTOR_TILT),
+    -Math.sin(radians) * Math.sin(CONNECTOR_TILT),
+    Math.cos(CONNECTOR_TILT)
+  )
 }
 
 export class PatchCableScene {
@@ -98,18 +103,16 @@ export class PatchCableScene {
     return material
   }
 
-  private plug(point: Endpoint, axis: Vector3, z: number): void {
+  private plug(point: Endpoint, axis: Vector3): void {
     const socket = new Group()
     socket.position.set(point.x, -point.y, 1)
-    socket.rotation.z = Math.atan2(axis.y, axis.x)
-    socket.scale.x = 0.55
-    const recess = new Mesh(new CircleGeometry(3.45, 48), this.metal.recess)
-    const rim = new Mesh(new TorusGeometry(3, 0.45, 12, 48), this.metal.body)
+    const recess = new Mesh(new CircleGeometry(3.8, 48), this.metal.recess)
+    const rim = new Mesh(new TorusGeometry(3.8, 0.45, 12, 48), this.metal.body)
     rim.position.z = 0.5
     socket.add(recess, rim)
     this.cables.add(socket)
     const group = new Group()
-    group.position.set(point.x, -point.y, z)
+    group.position.set(point.x, -point.y, 1)
     group.quaternion.setFromUnitVectors(UP, axis)
     const profile = [
       [2.6, -1.8],
@@ -159,9 +162,9 @@ export class PatchCableScene {
     frame.cables.forEach((cable) => {
       const a = cableAxis(cable.from, cable.to),
         b = cableAxis(cable.to, cable.from)
-      const z = 4 + (cable.lane % 8) * 0.6
-      const start = new Vector3(cable.from.x, -cable.from.y, z).addScaledVector(a, CONNECTOR_LENGTH)
-      const end = new Vector3(cable.to.x, -cable.to.y, z).addScaledVector(b, CONNECTOR_LENGTH)
+      const start = new Vector3(cable.from.x, -cable.from.y, 1).addScaledVector(a, CONNECTOR_LENGTH)
+      const end = new Vector3(cable.to.x, -cable.to.y, 1).addScaledVector(b, CONNECTOR_LENGTH)
+      const z = start.z + 8 + (cable.lane % 8) * 0.6
       const outward = PATCH_CABLE_OVERHANG - 30 - (cable.lane % 8) * 7
       const middleY = (start.y + end.y) / 2
       const sign = start.y >= end.y ? 1 : -1
@@ -191,8 +194,8 @@ export class PatchCableScene {
           this.jacket(cable.colorIndex)
         )
       )
-      this.plug(cable.from, a, z)
-      this.plug(cable.to, b, z)
+      this.plug(cable.from, a)
+      this.plug(cable.to, b)
     })
     this.renderer.render(this.scene, this.camera)
   }

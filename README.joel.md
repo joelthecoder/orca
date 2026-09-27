@@ -8,13 +8,13 @@ Connect session and workspace cards with chunky, brightly colored cables inspire
 
 The cable button at the bottom of the **main Projects sidebar** reveals jacks and a color picker. You can also click two jacks to connect them, including with the keyboard. Choose from **24 cable jackets**, including purple, red, yellow, hot pink, cyan, black, graphite, silver, and white. Each endpoint accepts up to eight connections and shows a faint spare jack when another connection is available.
 
-![Current renderer: plugs seated on the workspace and agent socket positions](docs/fork/assets/patch-cable-material.png)
+![Current renderer: top view of plugs seated in workspace and agent sockets](docs/fork/assets/patch-cable-material.png)
 
 This alignment fixture uses the live renderer and measured DOM socket positions with synthetic names. The actual feature attaches to the main app's existing workspace and agent rows.
 
-The live renderer uses Three.js tube geometry, machined-metal profiles, raised diamond grip facets, and physically lit rubber. The tube shares its connector's exit axis, avoiding a separate-looking joint. Geometry follows the endpoints and UI zoom; it redraws on change rather than continuously animating. An SVG fallback remains available if WebGL cannot initialize.
+The live renderer uses Three.js tube geometry, machined-metal profiles, raised diamond grip facets, and physically lit rubber. Plugs rise out of the panel, tilted just 12 degrees from its normal, so the top view shows a compact round collar instead of a barrel lying across the row. The cable leaves the collar toward the viewer before bending into its loop. Geometry follows the endpoints and UI zoom; it redraws on change rather than continuously animating. The SVG fallback uses the same top-view appearance if WebGL cannot initialize.
 
-Each plug covers its recessed socket, leaving a narrow metal rim. A faint dashed spare port directly below a connected plug starts another connection when clicked; it disappears at eight connections. In patch mode, sockets occupy the measured status-marker positions beside the names. Expanding an agent's message does not move its socket; nested rows retain their indentation, and the cable window widens to include them. Adjacent agents use outward-angled plugs so short cables form a rounded loop.
+Each plug covers its recessed socket, leaving a narrow circular metal rim. A faint dashed spare port directly below a connected plug starts another connection when clicked; it disappears at eight connections. In patch mode, sockets occupy the measured status-marker positions beside the names. Expanding an agent's message does not move its socket; nested rows retain their indentation, and the cable window widens to include them. Adjacent agents use outward-angled cable exits so short cables form a rounded loop.
 
 <details>
 <summary>Earlier layout study and palette lab</summary>
@@ -120,6 +120,7 @@ The [Codex-only upstream maintenance prompt](docs/fork/upstream-sync.md) specifi
 
 | Date       | Personal change                                                                                                                              | Verification                                                                                                                |
 | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-26 | Top-view plugs seated on measured row sockets, circular rims, and matching drag-preview artwork | Hidden Electron connect/spare/zoom/unplug check; 10 patch-cable tests; renderer and SVG screenshots |
 | 2026-09-25 | Main-sidebar patch cables, 24 colors, 3D material rendering, outside-window companion, agent inbox introductions, and separate fork launcher | Hidden Electron cross-repo drag/ghost/zoom/unplug check; peer-mail routing and real inbox tests; identity and reorder tests |
 
 For every future personal feature, update this file with behavior, limitations, verification, and fresh screenshots. Keep captures on synthetic fixtures so shared documentation does not expose private repository names, conversations, or credentials.

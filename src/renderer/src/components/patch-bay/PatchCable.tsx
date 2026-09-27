@@ -16,23 +16,11 @@ function PatchPlug({
     <g
       transform={`translate(${point.x} ${point.y}) rotate(${point.angle ?? (point.direction < 0 ? 180 : 0)}) scale(${scale})`}
     >
-      <ellipse
-        rx="3.5"
-        ry="7"
-        fill="var(--patch-metal-dark)"
-        stroke={`url(#${metalId})`}
-        strokeWidth="1.5"
-      />
-      <rect x="-5" y="-7" width="10" height="14" rx="1.5" fill="var(--patch-metal-dark)" />
-      <rect x="-2" y="-8" width="9" height="16" rx="1.5" fill={`url(#${metalId})`} />
-      <rect x="4" y="-9" width="29" height="18" rx="2" fill={`url(#${metalId})`} />
-      <rect x="8" y="-8" width="18" height="16" rx="1" fill={`url(#${gripId})`} opacity=".4" />
-      <path d="M 7 -8 V 8 M 27 -8 V 8" className="patch-plug-seam" />
-      <path
-        d="M 32 -7 L 38 -7 Q 41 -7 44 -5.25 L 48 -5.25 L 48 5.25 L 44 5.25 Q 41 7 38 7 L 32 7 Z"
-        className="patch-plug-collar"
-      />
-      <path d="M 35 -4 H 40" className="patch-cable-glint" />
+      <circle r="7.6" fill="var(--patch-shadow)" stroke={`url(#${metalId})`} strokeWidth="1.8" />
+      <ellipse cx="3.5" rx="10" ry="7" fill={`url(#${metalId})`} />
+      <ellipse cx="3.5" rx="10" ry="7" fill={`url(#${gripId})`} opacity=".4" />
+      <ellipse cx="7" rx="6.8" ry="7" fill={`url(#${metalId})`} />
+      <ellipse cx="7" rx="4.2" ry="4.4" fill="var(--patch-metal-dark)" />
     </g>
   )
 }
@@ -69,8 +57,8 @@ export function PatchCable({
     const radians = ((point.angle ?? 0) * Math.PI) / 180
     return {
       ...point,
-      x: point.x + Math.cos(radians) * 45 * plugScale,
-      y: point.y + Math.sin(radians) * 45 * plugScale
+      x: point.x + Math.cos(radians) * 7 * plugScale,
+      y: point.y + Math.sin(radians) * 7 * plugScale
     }
   }
   const path = patchCablePath(
@@ -100,11 +88,11 @@ export function PatchCable({
         </pattern>
       </defs>
       <path d={path} className="patch-cable-shadow" transform="translate(0 6)" />
+      <PatchPlug scale={plugScale} point={start} metalId={`${id}-metal`} gripId={`${id}-grip`} />
+      <PatchPlug scale={plugScale} point={end} metalId={`${id}-metal`} gripId={`${id}-grip`} />
       <path d={path} className="patch-cable-edge" />
       <path d={path} className="patch-cable-body" />
       <path d={path} className="patch-cable-light" transform="translate(0 -2)" />
-      <PatchPlug scale={plugScale} point={start} metalId={`${id}-metal`} gripId={`${id}-grip`} />
-      <PatchPlug scale={plugScale} point={end} metalId={`${id}-metal`} gripId={`${id}-grip`} />
     </g>
   )
 }
